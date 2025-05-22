@@ -94,9 +94,9 @@ export default function EventsParticipated() {
   }
 
   return (
-    <div className="space-y-8 min-h-screen flex flex-col justify-center">
-      <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Events Participated</h1>
+    <div className="space-y-8 min-h-screen flex flex-col justify-center p-4">
+      <div className="flex justify-between items-center mt-8 md:mt-20">
+        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Events Participated</h1>
       </div>
 
       {error && (

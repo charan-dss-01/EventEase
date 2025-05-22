@@ -103,8 +103,8 @@ export default function MyEvents() {
 
   return (
     <div className="space-y-8 min-h-screen flex flex-col justify-center px-4">
-      <div className="flex justify-between items-center mt-20">
-        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">My Events</h1>
+      <div className="flex justify-between items-center mt-8 md:mt-20">
+        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mt-4">My Events</h1>
         <button
           onClick={() => router.push('/dashboard/create-event')}
           className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200"
@@ -201,6 +201,13 @@ export default function MyEvents() {
                       title="Delete Event"
                     >
                       <Trash2 className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => router.push(`/dashboard/update-event/${event._id}`)}
+                      className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors duration-200"
+                      title="Update Event"
+                    >
+                      <Edit className="w-5 h-5" />
                     </button>
                   </div>
                 </div>

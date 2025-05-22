@@ -82,8 +82,8 @@ export default function CreateEvent() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto min-h-screen flex flex-col justify-center">
-      <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-8">Create New Event</h1>
+    <div className="max-w-2xl mx-auto min-h-screen flex flex-col justify-center p-4">
+      <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mt-8 mb-4">Create New Event</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
