@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
             totalParticipants:0,
             registeredUsers:[],
             capacity:capacity,
+            tickets:[]
         });
 
         // Add event ID to the user's eventsCreated array

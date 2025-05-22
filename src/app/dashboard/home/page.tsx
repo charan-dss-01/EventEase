@@ -107,7 +107,7 @@ export default function DashboardHome() {
             <span>Create New Event</span>
           </button>
           <button
-            onClick={() => window.location.href = '/dashboard/participated'}
+            onClick={() => window.location.href = '/dashboard/events-participated'}
             className="flex items-center justify-center space-x-2 p-4 bg-pink-500/10 hover:bg-pink-500/20 rounded-lg text-pink-500 transition-colors duration-200"
           >
             <span>View Participated Events</span>

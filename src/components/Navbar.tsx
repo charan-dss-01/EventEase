@@ -12,7 +12,7 @@ import {
 } from '@clerk/nextjs';
 import { usePathname } from 'next/navigation';
 import { Menu as MenuIcon, X } from 'lucide-react';
-
+ 
 function Navbar({ className }: { className?: string }) {
     const [active, setActive] = useState<string | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,42 +40,42 @@ function Navbar({ className }: { className?: string }) {
 
     const NavLinks = () => (
         <>
-            <SignedOut>
-                {isHome && (
-                    <>
-                        <div onClick={() => scrollToSection('home')}>
-                            <MenuItem setActive={setActive} active={active} item="Home" />
-                        </div>
-                        <div onClick={() => scrollToSection('features')}>
-                            <MenuItem setActive={setActive} active={active} item="Features" />
-                        </div>
-                        <div onClick={() => scrollToSection('testimonials')}>
-                            <MenuItem setActive={setActive} active={active} item="Testimonials" />
-                        </div>
-                        <div onClick={() => scrollToSection('contact')}>
-                            <MenuItem setActive={setActive} active={active} item="Contact" />
-                        </div>
-                    </>
-                )}
-            </SignedOut>
-            
-            <SignedIn>
-                <Link href="/">
-                    <MenuItem setActive={setActive} active={active} item="Home" />
-                </Link>
-                <Link href="/all-events">
-                    <MenuItem setActive={setActive} active={active} item="All Events" />
-                </Link>
-                <Link href="/technical-events">
-                    <MenuItem setActive={setActive} active={active} item="Technical Events" />
-                </Link>
-                <Link href="/non-technical-events">
-                    <MenuItem setActive={setActive} active={active} item="Non-Technical Events" />
-                </Link>
-                <Link href="/dashboard">
-                    <MenuItem setActive={setActive} active={active} item="Dashboard" />
-                </Link>
-            </SignedIn>
+                        <SignedOut>
+                            {isHome && (
+                                <>
+                                    <div onClick={() => scrollToSection('home')}>
+                                        <MenuItem setActive={setActive} active={active} item="Home" />
+                                    </div>
+                                    <div onClick={() => scrollToSection('features')}>
+                                        <MenuItem setActive={setActive} active={active} item="Features" />
+                                    </div>
+                                    <div onClick={() => scrollToSection('testimonials')}>
+                                        <MenuItem setActive={setActive} active={active} item="Testimonials" />
+                                    </div>
+                                    <div onClick={() => scrollToSection('contact')}>
+                                        <MenuItem setActive={setActive} active={active} item="Contact" />
+                                    </div>
+                                </>
+                            )}
+                        </SignedOut>
+                        
+                        <SignedIn>
+                            <Link href="/">
+                                <MenuItem setActive={setActive} active={active} item="Home" />
+                            </Link>
+                            <Link href="/all-events">
+                                <MenuItem setActive={setActive} active={active} item="Events" />
+                            </Link>
+                            <Link href="/technical-events">
+                                <MenuItem setActive={setActive} active={active} item="Technical Events" />
+                            </Link>
+                            <Link href="/non-technical-events">
+                                <MenuItem setActive={setActive} active={active} item="Non-Technical Events" />
+                            </Link>
+                            <Link href="/dashboard">
+                                <MenuItem setActive={setActive} active={active} item="Dashboard" />
+                            </Link>
+                        </SignedIn>
         </>
     );
 
@@ -97,28 +97,28 @@ function Navbar({ className }: { className?: string }) {
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center space-x-4">
                             <NavLinks />
-                        </div>
-                        
-                        <div className="flex items-center gap-3">
-                            <SignedOut>
-                                <SignInButton mode="modal">
-                                    <button className="bg-gradient-to-r from-purple-400 to-pink-600 hover:from-purple-500 hover:to-pink-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300">
-                                        Sign In
-                                    </button>
-                                </SignInButton>
-                                <SignUpButton mode="modal">
-                                    <button className="border border-transparent bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-padding hover:from-purple-500 hover:to-pink-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300">
-                                        Sign Up
-                                    </button>
-                                </SignUpButton>
-                            </SignedOut>
-                            <SignedIn>
-                                <UserButton afterSignOutUrl="/" />
-                            </SignedIn>
-                        </div>
                     </div>
-                </Menu>
-            </div>
+                    
+                    <div className="flex items-center gap-3">
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <button className="bg-gradient-to-r from-purple-400 to-pink-600 hover:from-purple-500 hover:to-pink-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300">
+                                    Sign In
+                                </button>
+                            </SignInButton>
+                            <SignUpButton mode="modal">
+                                <button className="border border-transparent bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-padding hover:from-purple-500 hover:to-pink-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300">
+                                    Sign Up
+                                </button>
+                            </SignUpButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                    </div>
+                </div>
+            </Menu>
+        </div>
 
             {/* Mobile Sidebar */}
             <div

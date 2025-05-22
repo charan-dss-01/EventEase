@@ -13,6 +13,9 @@ export async function connect() {
             return; // already connected
         }
 
+        // Set strictQuery to false to prepare for Mongoose 7
+        mongoose.set('strictQuery', false);
+
         const connection = await mongoose.connect(process.env.MONGO_URI);
         isConnected = true;
 
@@ -22,6 +25,18 @@ export async function connect() {
             console.log("Error connecting to database");
             console.error(error);
             process.exit();
+        });
+
+        // Handle connection errors
+        mongoose.connection.on('disconnected', () => {
+            console.log('MongoDB disconnected');
+            isConnected = false;
+        });
+
+        // Handle process termination
+        process.on('SIGINT', async () => {
+            await mongoose.connection.close();
+            process.exit(0);
         });
 
     } catch (error) {

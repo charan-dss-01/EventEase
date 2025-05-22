@@ -34,14 +34,21 @@ const eventSchema = new Schema({
         default:0,
     },
     registeredUsers:{
-        type:Array,
-        ref:"User",
+        type:[String],
         default:[],
     },
     capacity:{
         type:Number,
         required:[true,"capacity is required"],
     },
-})
+    tickets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ticket',
+        default: []
+    }]
+});
 
-export default mongoose.models.Event || mongoose.model("Event",eventSchema);
+// Ensure the model is registered only once
+const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
+
+export default Event;

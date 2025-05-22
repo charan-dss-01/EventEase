@@ -64,6 +64,13 @@ function Page() {
   useEffect(() => {
     let filtered = events
 
+    // Filter out completed events
+    filtered = filtered.filter(event => {
+      const eventDate = new Date(event.date)
+      const today = new Date()
+      return eventDate >= today
+    })
+
     // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter(event =>
@@ -138,6 +145,7 @@ function Page() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-zinc-900/50 border-zinc-800 text-white placeholder:text-gray-400 focus:ring-purple-500"
+                suppressHydrationWarning={true}
               />
             </div>
             <Popover>
@@ -149,6 +157,7 @@ function Page() {
                     "bg-zinc-900/50 border-zinc-800 text-white hover:bg-zinc-800",
                     !selectedDate && "text-gray-400"
                   )}
+                  suppressHydrationWarning={true}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {selectedDate ? format(selectedDate, 'PPP') : 'Select date'}
@@ -213,6 +222,7 @@ function Page() {
                 variant="ghost"
                 onClick={clearFilters}
                 className="text-gray-400 hover:text-white hover:bg-zinc-800"
+                suppressHydrationWarning={true}
               >
                 Clear filters
               </Button>

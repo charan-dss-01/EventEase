@@ -35,13 +35,21 @@ interface Event {
 }
 
 interface Ticket {
+  ticketId: string;
   eventId: string;
   userId: string;
-  eventTitle: string;
-  eventDate: string;
-  eventLocation: string;
-  participantName: string;
-  ticketId: string;
+  createdAt: string;
+  status: 'active' | 'cancelled' | 'used';
+  event?: {
+    title: string;
+    date: string;
+    location: string;
+    category: string;
+  };
+  user?: {
+    fullName: string;
+    username: string;
+  };
 }
 
 const COLORS = ['#9333EA', '#EC4899', '#3B82F6', '#10B981'];
@@ -57,28 +65,9 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const ticketRef = useRef<HTMLDivElement>(null);
 
-  // Generate ticket function
-  const generateTicket = (eventData: Event) => {
-    if (!user) return null;
-    
-    console.log('Generating ticket for event:', eventData);
-    const ticketData: Ticket = {
-      eventId: eventData._id,
-      userId: user.id,
-      eventTitle: eventData.title,
-      eventDate: eventData.date,
-      eventLocation: eventData.location,
-      participantName: user.fullName || user.username || 'Guest',
-      ticketId: `TICKET-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
-    };
-    console.log('Generated ticket data:', ticketData);
-    setTicket(ticketData);
-    return ticketData;
-  };
-
   useEffect(() => {
     const fetchEvent = async () => {
-      if (!isUserLoaded) return; // Wait for user data to load
+      if (!isUserLoaded) return;
       
       try {
         const response = await axios.post('/api/event/getSingleEvent', {
@@ -94,10 +83,19 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
           console.log('Is user registered:', isUserRegistered);
           setIsRegistered(isUserRegistered);
           
-          // If user is already registered, generate ticket
+          // If user is already registered, fetch ticket data
           if (isUserRegistered) {
-            const newTicket = generateTicket(eventData);
-            console.log('Generated ticket on load:', newTicket);
+            try {
+              const ticketResponse = await axios.post('/api/event/getTicket', {
+                eventId: resolvedParams.eventId,
+                userId: user.id
+              });
+              if (ticketResponse.data.success) {
+                setTicket(ticketResponse.data.ticket);
+              }
+            } catch (error) {
+              console.error('Error fetching ticket:', error);
+            }
           }
         }
       } catch (error: any) {
@@ -122,7 +120,7 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
     setIsRegistering(true);
     try {
       console.log('Registering for event:', resolvedParams.eventId);
-      const response = await axios.post('http://localhost:3000/api/event/registerEvent', {
+      const response = await axios.post('/api/event/registerEvent', {
         eventId: resolvedParams.eventId,
         userId: user.id
       });
@@ -131,8 +129,14 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
       
       if (response.data.success && event) {
         setIsRegistered(true);
-        const newTicket = generateTicket(event);
-        console.log('Generated ticket after registration:', newTicket);
+        // Fetch the newly created ticket
+        const ticketResponse = await axios.post('/api/event/getTicket', {
+          eventId: resolvedParams.eventId,
+          userId: user.id
+        });
+        if (ticketResponse.data.success) {
+          setTicket(ticketResponse.data.ticket);
+        }
       }
     } catch (error: any) {
       console.error('Registration error:', error);
@@ -145,12 +149,25 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
   const downloadTicket = async () => {
     if (!ticket) {
       console.error('No ticket data available');
-      if (event) {
-        const newTicket = generateTicket(event);
-        if (newTicket) {
-          setTimeout(() => {
-            downloadTicket();
-          }, 100);
+      if (event && user) {
+        try {
+          console.log("Downloading ticket:", { eventId: resolvedParams.eventId, userId: user?.id });
+          // Fetch ticket data from API
+          const ticketResponse = await axios.post('/api/event/getTicket', {
+            eventId: resolvedParams.eventId,
+            userId: user?.id
+          });
+          if (ticketResponse.data.success) {
+            setTicket(ticketResponse.data.ticket);
+            // Wait for state to update
+            setTimeout(() => {
+              downloadTicket();
+            }, 100);
+            return;
+          }
+        } catch (error) {
+          console.error('Error fetching ticket:', error);
+          setError('Failed to fetch ticket data. Please try again.');
           return;
         }
       }
@@ -310,26 +327,26 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                   <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 mb-8">
                     <div className="grid grid-cols-2 gap-8">
                       <div>
-                        <h2 className="text-3xl font-bold text-white mb-6">{ticket.eventTitle}</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{ticket.event?.title}</h2>
                         <div className="space-y-4">
                           <div className="flex items-center text-purple-200">
                             <Calendar className="w-6 h-6 mr-3" />
-                            <span className="text-xl">{new Date(ticket.eventDate).toLocaleDateString()}</span>
+                            <span className="text-xl">{new Date(ticket.event?.date || '').toLocaleDateString()}</span>
                           </div>
                           <div className="flex items-center text-purple-200">
                             <MapPin className="w-6 h-6 mr-3" />
-                            <span className="text-xl">{ticket.eventLocation}</span>
+                            <span className="text-xl">{ticket.event?.location}</span>
                           </div>
                         </div>
                       </div>
                       <div className="flex flex-col justify-between">
                         <div className="text-right">
                           <p className="text-purple-200 mb-2">Participant</p>
-                          <p className="text-2xl font-semibold text-white">{ticket.participantName}</p>
+                          <p className="text-2xl font-semibold text-white">{ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-purple-200 mb-2">Event Category</p>
-                          <p className="text-xl text-white capitalize">{event?.category}</p>
+                          <p className="text-xl text-white capitalize">{ticket.event?.category}</p>
                         </div>
                       </div>
                     </div>
@@ -343,7 +360,7 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                     </div>
                     <div className="text-right">
                       <p className="text-purple-200">Generated on</p>
-                      <p className="text-white">{new Date().toLocaleDateString()}</p>
+                      <p className="text-white">{new Date(ticket.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
 
@@ -375,10 +392,12 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                     <h3 className="text-purple-400 font-semibold mb-2">Ticket Details</h3>
                     <div className="space-y-2 text-gray-300">
                       <p>Ticket ID: {ticket.ticketId}</p>
-                      <p>Event: {ticket.eventTitle}</p>
-                      <p>Date: {new Date(ticket.eventDate).toLocaleDateString()}</p>
-                      <p>Location: {ticket.eventLocation}</p>
-                      <p>Participant: {ticket.participantName}</p>
+                      <p>Event: {ticket.event?.title}</p>
+                      <p>Date: {new Date(ticket.event?.date || '').toLocaleDateString()}</p>
+                      <p>Location: {ticket.event?.location}</p>
+                      <p>Participant: {ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
+                      <p>Status: <span className={`capitalize ${ticket.status === 'active' ? 'text-green-500' : ticket.status === 'used' ? 'text-yellow-500' : 'text-red-500'}`}>{ticket.status}</span></p>
+                      <p>Created: {new Date(ticket.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
                 )}
@@ -442,10 +461,10 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         borderRadius: '8px',
-                        color: '#fff',
+                        color: '#000',
                         fontSize: '14px',
                         padding: '8px 12px',
                         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
@@ -517,10 +536,10 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                   <YAxis stroke="#9CA3AF" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: '#000',
                       fontSize: '14px',
                       padding: '8px 12px',
                       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'

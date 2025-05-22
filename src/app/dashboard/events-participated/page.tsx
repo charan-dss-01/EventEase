@@ -46,10 +46,11 @@ export default function EventsParticipated() {
 
   const downloadTicket = async (eventId: string, ticketId: string) => {
     try {
+      console.log("Downloading ticket:", { eventId, ticketId, userId: user?.id });
       const response = await axios.post('/api/event/getTicket', {
         eventId,
         ticketId,
-        clerkUserId: user?.id
+        userId: user?.id
       })
 
       if (response.data.ticket) {
@@ -160,7 +161,7 @@ export default function EventsParticipated() {
                     View Details
                   </button>
                   <button
-                    onClick={() => downloadTicket(event._id, event.ticketId)}
+                    // onClick={() => downloadTicket(event._id, event.ticketId)}
                     className="p-2 text-purple-500 hover:bg-purple-500/10 rounded-lg transition-colors duration-200"
                     title="Download Ticket"
                   >

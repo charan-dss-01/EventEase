@@ -22,7 +22,7 @@ export default function Features() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
           <h1 className="text-2xl mt-10 md:text-3xl lg:text-5xl font-bold text-center text-white relative z-2 font-sans">
@@ -43,9 +43,9 @@ export default function Features() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-      <HoverEffect items={features} />
+          <HoverEffect items={features} />
         </motion.div>
-    </div>
+      </div>
     </section>
   );
 }
@@ -60,8 +60,20 @@ export const features = [
     {
       title: "Event Creation & Management",
       description:
-        "Create, update, and delete events with detailed information such as title, description, date, location, and images.",
+        "Create, update, and delete events with detailed information such as title, description, date, location, capacity, and category.",
       link: "/docs/events",
+    },
+    {
+      title: "Ticket System",
+      description:
+        "Automated ticket generation for event registrations with unique IDs, verification system, and ticket status tracking.",
+      link: "/docs/tickets",
+    },
+    {
+      title: "Event Registration",
+      description:
+        "Users can register for events, receive unique tickets, and download them for event entry. Event organizers can verify tickets on event day.",
+      link: "/docs/registration",
     },
     {
       title: "Image Upload with Cloudinary",
@@ -70,21 +82,21 @@ export const features = [
       link: "/docs/image-upload",
     },
     {
-      title: "Tag-based Search & Filtering",
+      title: "Category-based Event Organization",
       description:
-        "Search events and filter them based on tags, date, or location for better user experience.",
-      link: "/docs/search-filter",
+        "Events are organized by categories, making it easy for users to find events of their interest.",
+      link: "/docs/categories",
     },
     {
-      title: "Responsive UI with ShadCN",
+      title: "Responsive Dashboard",
       description:
-        "Beautiful, modern, and accessible UI components built with ShadCN and Tailwind CSS for a seamless frontend experience.",
-      link: "/docs/ui",
+        "User-friendly dashboard for managing created events, viewing participated events, and handling ticket verifications.",
+      link: "/docs/dashboard",
     },
     {
       title: "MongoDB Backend",
       description:
-        "Robust backend powered by MongoDB for storing user data, events, and media references securely.",
+        "Robust backend powered by MongoDB for storing user data, events, tickets, and media references securely.",
       link: "/docs/backend",
     },
   ];

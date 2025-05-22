@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
 
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ export const HoverEffect = ({
         <a
           href={item?.link}
           key={item?.link}
+          onClick={(e) => e.preventDefault()}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
