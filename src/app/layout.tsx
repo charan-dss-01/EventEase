@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Event Management System",
+  title: "Event Ease",
   description: "A modern event management system",
 };
 

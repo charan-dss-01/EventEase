@@ -66,7 +66,7 @@ export function BackgroundBoxesDemo() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 mt-8 justify-center"
           >
-            <Link href="/sign-up">
+            <Link href="/all-events">
               <button className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105">
                 Get Started
               </button>

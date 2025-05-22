@@ -19,6 +19,7 @@ import {
   Bar,
   Legend
 } from 'recharts';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface Event {
   _id: string;
@@ -348,6 +349,23 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                           <p className="text-purple-200 mb-2">Event Category</p>
                           <p className="text-xl text-white capitalize">{ticket.event?.category}</p>
                         </div>
+                        <div className="flex justify-end mt-4">
+                          <div className="bg-white p-2 rounded-lg">
+                            <QRCodeSVG
+                              value={JSON.stringify({
+                                ticketId: ticket.ticketId,
+                                eventTitle: ticket.event?.title,
+                                date: ticket.event?.date,
+                                location: ticket.event?.location,
+                                participant: ticket.user?.fullName || ticket.user?.username,
+                                category: ticket.event?.category
+                              })}
+                              size={100}
+                              level="H"
+                              includeMargin={true}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -390,14 +408,33 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                 {ticket && (
                   <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700">
                     <h3 className="text-purple-400 font-semibold mb-2">Ticket Details</h3>
-                    <div className="space-y-2 text-gray-300">
-                      <p>Ticket ID: {ticket.ticketId}</p>
-                      <p>Event: {ticket.event?.title}</p>
-                      <p>Date: {new Date(ticket.event?.date || '').toLocaleDateString()}</p>
-                      <p>Location: {ticket.event?.location}</p>
-                      <p>Participant: {ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
-                      <p>Status: <span className={`capitalize ${ticket.status === 'active' ? 'text-green-500' : ticket.status === 'used' ? 'text-yellow-500' : 'text-red-500'}`}>{ticket.status}</span></p>
-                      <p>Created: {new Date(ticket.createdAt).toLocaleDateString()}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2 text-gray-300">
+                        <p>Ticket ID: {ticket.ticketId}</p>
+                        <p>Event: {ticket.event?.title}</p>
+                        <p>Date: {new Date(ticket.event?.date || '').toLocaleDateString()}</p>
+                        <p>Location: {ticket.event?.location}</p>
+                        <p>Participant: {ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
+                        <p>Status: <span className={`capitalize ${ticket.status === 'active' ? 'text-green-500' : ticket.status === 'used' ? 'text-yellow-500' : 'text-red-500'}`}>{ticket.status}</span></p>
+                        <p>Created: {new Date(ticket.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <div className="bg-white p-2 rounded-lg">
+                          <QRCodeSVG
+                            value={JSON.stringify({
+                              ticketId: ticket.ticketId,
+                              eventTitle: ticket.event?.title,
+                              date: ticket.event?.date,
+                              location: ticket.event?.location,
+                              participant: ticket.user?.fullName || ticket.user?.username,
+                              category: ticket.event?.category
+                            })}
+                            size={150}
+                            level="H"
+                            includeMargin={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
