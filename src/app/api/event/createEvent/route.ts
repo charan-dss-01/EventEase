@@ -36,8 +36,8 @@ export async function POST(request: NextRequest) {
 
             console.log('Uploading to Cloudinary with config:', {
                 cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-                api_key: process.env.CLOUDINARY_API_KEY ? 'exists' : 'missing',
-                api_secret: process.env.CLOUDINARY_API_SECRET ? 'exists' : 'missing'
+                api_key: process.env.CLOUDINARY_API_KEY,
+                api_secret: process.env.CLOUDINARY_API_SECRET
             });
 
             const result = await cloudinary.uploader.upload(image, {
