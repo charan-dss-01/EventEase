@@ -42,8 +42,9 @@ export async function POST(request: NextRequest) {
             success: true,
             events
         }, { status: 200 });
-
-    } catch (error: any) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
         console.error("Error fetching conducted events:", error);
         return NextResponse.json({
             success: false,

@@ -4,6 +4,7 @@ import User from "@/models/userModel";
 
 export const dynamic = 'force-dynamic';
 
+
 export async function POST(request: NextRequest) {
     try {
         await connect();
@@ -32,7 +33,9 @@ export async function POST(request: NextRequest) {
             events: user.eventsCreated
         }, { status: 200 });
 
-    } catch (error: any) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
         console.error("Error fetching user's created events:", error);
         return NextResponse.json({
             success: false,

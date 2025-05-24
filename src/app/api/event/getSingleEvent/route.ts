@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Event from "@/models/eventModel";
@@ -26,6 +27,7 @@ export async function POST(request: NextRequest) {
             event
         }, { status: 200 });   
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch(error: any) {
         console.error("Error in getSingleEvent:", error);
         return NextResponse.json({

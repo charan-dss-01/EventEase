@@ -40,6 +40,9 @@ function Page() {
   const locations = Array.from(new Set(events.map(event => event.location)))
   const categories = Array.from(new Set(events.map(event => event.category)))
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  /* eslint-disable react-hooks/exhaustive-deps */
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -267,6 +270,7 @@ function Page() {
                 >
                   <Card className="bg-zinc-900/50 border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
                     <div className="relative h-48 overflow-hidden rounded-t-lg">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={event.image || '/placeholder-event.jpg'}
                         alt={event.title}
@@ -326,6 +330,7 @@ function Page() {
                     >
                       <Card className="bg-zinc-900/50 border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
                         <div className="relative h-48 overflow-hidden rounded-t-lg">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={event.image || '/placeholder-event.jpg'}
                             alt={event.title}

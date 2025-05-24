@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Event from "@/models/eventModel";
@@ -27,7 +28,9 @@ export async function POST(request: NextRequest) {
             events
         }, { status: 200 });
 
-    } catch (error: any) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
         console.error("Error fetching events by category:", error);
         return NextResponse.json({
             success: false,

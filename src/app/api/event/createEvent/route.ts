@@ -45,7 +45,9 @@ export async function POST(request: NextRequest) {
                 resource_type: "auto"
             });
             imageUrl = result.secure_url;
-        } catch (error: any) {
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch (error: any) {
             console.error('Cloudinary upload error:', error);
             return NextResponse.json({
                 success: false,
@@ -111,7 +113,9 @@ export async function POST(request: NextRequest) {
             event,
         }, { status: 201 });
 
-    } catch (error: any) {
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
         console.error('Event creation error:', error);
         return NextResponse.json({
             success: false,

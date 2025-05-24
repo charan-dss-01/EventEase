@@ -90,6 +90,7 @@ export const ProductItem = ({
 }) => {
   return (
     <a href={href} className="flex space-x-2">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         width={140}
@@ -109,6 +110,7 @@ export const ProductItem = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <a

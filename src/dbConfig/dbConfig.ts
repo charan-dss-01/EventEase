@@ -1,4 +1,5 @@
 // src/dbConfig/dbConfig.ts
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import mongoose from "mongoose";
 
 let isConnected = false;

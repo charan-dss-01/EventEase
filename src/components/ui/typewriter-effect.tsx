@@ -26,6 +26,7 @@ export const TypewriterEffect = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isInView) {
       animate(

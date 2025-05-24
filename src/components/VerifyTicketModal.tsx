@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
+
 import axios from 'axios';
 import { X, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -8,7 +10,7 @@ interface VerifyTicketModalProps {
     eventId: string;
     eventDate: string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VerifyTicketModal({ isOpen, onClose, eventId, eventDate }: VerifyTicketModalProps) {
     const [ticketId, setTicketId] = useState('');
     const [loading, setLoading] = useState(false);

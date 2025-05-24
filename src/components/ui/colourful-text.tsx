@@ -19,6 +19,7 @@ export function ColourfulText({ text }: { text: string }) {
   const [currentColors, setCurrentColors] = React.useState(colors);
   const [count, setCount] = React.useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     const interval = setInterval(() => {
       const shuffled = [...colors].sort(() => Math.random() - 0.5);

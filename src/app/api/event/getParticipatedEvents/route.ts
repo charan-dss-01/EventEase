@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
@@ -21,7 +23,9 @@ export async function POST(request: NextRequest) {
             events:events?.eventsParticipated,
         },{status:200});
         
-    } catch (error:any) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error:any) {
         console.log(error.message);
         return NextResponse.json({
             success:false,

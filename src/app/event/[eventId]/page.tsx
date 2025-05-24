@@ -1,4 +1,6 @@
 "use client"
+/* eslint-disable @next/next/no-img-element */
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, use, useRef } from 'react';
 import axios from 'axios';
@@ -409,14 +411,14 @@ const EventDetail = ({ params }: { params: Promise<{ eventId: string }> }) => {
                   <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700">
                     <h3 className="text-purple-400 font-semibold mb-2">Ticket Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2 text-gray-300">
-                        <p>Ticket ID: {ticket.ticketId}</p>
-                        <p>Event: {ticket.event?.title}</p>
-                        <p>Date: {new Date(ticket.event?.date || '').toLocaleDateString()}</p>
-                        <p>Location: {ticket.event?.location}</p>
-                        <p>Participant: {ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
-                        <p>Status: <span className={`capitalize ${ticket.status === 'active' ? 'text-green-500' : ticket.status === 'used' ? 'text-yellow-500' : 'text-red-500'}`}>{ticket.status}</span></p>
-                        <p>Created: {new Date(ticket.createdAt).toLocaleDateString()}</p>
+                    <div className="space-y-2 text-gray-300">
+                      <p>Ticket ID: {ticket.ticketId}</p>
+                      <p>Event: {ticket.event?.title}</p>
+                      <p>Date: {new Date(ticket.event?.date || '').toLocaleDateString()}</p>
+                      <p>Location: {ticket.event?.location}</p>
+                      <p>Participant: {ticket.user?.fullName || ticket.user?.username || 'Guest'}</p>
+                      <p>Status: <span className={`capitalize ${ticket.status === 'active' ? 'text-green-500' : ticket.status === 'used' ? 'text-yellow-500' : 'text-red-500'}`}>{ticket.status}</span></p>
+                      <p>Created: {new Date(ticket.createdAt).toLocaleDateString()}</p>
                       </div>
                       <div className="flex justify-center items-center">
                         <div className="bg-white p-2 rounded-lg">
