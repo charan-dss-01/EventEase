@@ -1,11 +1,13 @@
 "use client"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Home, 
   Calendar, 
   Users, 
   PlusCircle, 
+  UserPlus,
+  ClipboardCheck,
   Menu, 
   X,
   LogOut
@@ -32,6 +34,16 @@ const menuItems = [
     title: 'Events Participated',
     icon: Users,
     path: '/dashboard/events-participated'
+  },
+  {
+    title: 'Send Request For College Lead',
+    icon: UserPlus,
+    path: '/dashboard/sendRequest'
+  },
+  {
+    title: 'Approve Requests',
+    icon: ClipboardCheck,
+    path: '/dashboard/ApprovePanel'
   }
 ]
 
@@ -43,11 +55,43 @@ export default function DashboardLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const router = useRouter()
   const { user} = useUser()
-
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isCollegeLead, setIsCollegeLead] = useState(false)
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
-
+  const CheckAdmin=async () => { 
+    const response = await fetch('/api/admin/isAdmin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ clerkUserId: user?.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+      setIsAdmin(true);
+    }
+  }
+  const CheckCollegeLead=async () => { 
+    const response = await fetch('/api/admin/isCollegeLead', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ clerkUserId: user?.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+      setIsCollegeLead(true);
+    }
+  }
+  useEffect(() => {
+    if (user) {
+      CheckAdmin();
+      CheckCollegeLead();
+    }
+  }, [user]);
   // const handleSignOut = async () => {
   //   try {
   //     await signOut()
@@ -91,17 +135,41 @@ export default function DashboardLayout({
 
           {/* Navigation Menu */}
           <nav className="flex-1 p-4 space-y-2">
-            {menuItems.map((item) => (
-              <button
-                key={item.path}
-                onClick={() => router.push(item.path)}
-                className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-zinc-800 rounded-lg transition-colors duration-200"
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{item.title}</span>
-              </button>
-            ))}
+            {menuItems.map((item) => {
+              // 🔹 Show Approve Requests only for Admins
+              // if (item.title === "Approve Requests" && !isAdmin) return null;
+
+              if (isCollegeLead || isAdmin) {
+                // Leads & Admins → hide Send Request
+                if (item.title === "Send Request For College Lead") return null;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => router.push(item.path)}
+                    className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-zinc-800 rounded-lg transition-colors duration-200"
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.title}</span>
+                  </button>
+                );
+              } else {
+                // Normal users → hide Create Event & My Events
+                if (item.title === "Create Event" || item.title === "My Events" || item.title === "Approve Requests") return null;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => router.push(item.path)}
+                    className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-zinc-800 rounded-lg transition-colors duration-200"
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.title}</span>
+                  </button>
+                );
+              }
+            })}
           </nav>
+
+
 
           {/* Sign Out Button */}
           <div className="p-4 border-t border-zinc-800">

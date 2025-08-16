@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
   if (user.collegeLeadRequest === "pending") {
     return NextResponse.json({ success: false, message: "Request already pending" }, { status: 400 });
   }
+  if(user.collegeLeadRequest === "approved") {
+    return NextResponse.json({ success: false, message: "Request already approved" }, { status: 400 });
+  }
   user.collegeLeadRequest = "pending";
   user.collegeInfo = {
     collegeName,

@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
   if (action === "approve") {
     user.role = "collegeLead";
     user.collegeLeadRequest = "approved";
+    user.isCollegeLead = true; // Ensure the isCollegeLead flag is set
   } else if (action === "reject") {
     user.collegeLeadRequest = "rejected";
   } else {

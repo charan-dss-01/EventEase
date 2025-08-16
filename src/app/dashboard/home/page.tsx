@@ -17,6 +17,40 @@ export default function DashboardHome() {
     eventsParticipated: 0,
     upcomingEvents: 0
   })
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isCollegeLead, setIsCollegeLead] = useState(false)
+  const CheckAdmin=async () => { 
+    const response = await fetch('/api/admin/isAdmin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ clerkUserId: user?.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+      setIsAdmin(true);
+    }
+  }
+  const CheckCollegeLead=async () => { 
+    const response = await fetch('/api/admin/isCollegeLead', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ clerkUserId: user?.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+      setIsCollegeLead(true);
+    }
+  }
+  useEffect(() => {
+    if (user) {
+      CheckAdmin();
+      CheckCollegeLead();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -100,12 +134,14 @@ export default function DashboardHome() {
       <div className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800">
         <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button
-            onClick={() => window.location.href = '/dashboard/create-event'}
-            className="flex items-center justify-center space-x-2 p-4 bg-purple-500/10 hover:bg-purple-500/20 rounded-lg text-purple-500 transition-colors duration-200"
-          >
-            <span>Create New Event</span>
+          {(isAdmin || isCollegeLead) && (
+            <button
+              onClick={() => window.location.href = '/dashboard/create-event'}
+              className="flex items-center justify-center space-x-2 p-4 bg-purple-500/10 hover:bg-purple-500/20 rounded-lg text-purple-500 transition-colors duration-200"
+            >
+                <span>Create New Event</span>
           </button>
+          )}
           <button
             onClick={() => window.location.href = '/dashboard/events-participated'}
             className="flex items-center justify-center space-x-2 p-4 bg-pink-500/10 hover:bg-pink-500/20 rounded-lg text-pink-500 transition-colors duration-200"
