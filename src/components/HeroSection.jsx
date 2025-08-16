@@ -71,7 +71,7 @@ export function BackgroundBoxesDemo() {
                 Get Started
               </button>
             </Link>
-            <Link href="/features">
+            <Link href="/all-events">
               <button className="px-8 py-3 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
                 Explore Features
               </button>

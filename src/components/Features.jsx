@@ -52,51 +52,51 @@ export default function Features() {
 
 export const features = [
     {
-      title: "User Authentication",
+      title: "For Event Organizers",
       description:
-        "Secure and seamless user sign-up and login using Clerk, with session management and profile syncing.",
-      link: "/docs/authentication",
+        "Create and promote your events with ease. Manage registrations, track attendance, and engage with your audience through our comprehensive event management tools.",
+      link: "/docs/organizers",
     },
     {
-      title: "Event Creation & Management",
+      title: "For Students & Participants",
       description:
-        "Create, update, and delete events with detailed information such as title, description, date, location, capacity, and category.",
-      link: "/docs/events",
+        "Discover exciting events, register with a single click, and receive digital tickets. Stay updated with event notifications and manage your event calendar.",
+      link: "/docs/participants",
     },
     {
-      title: "Ticket System",
+      title: "Event Promotion",
       description:
-        "Automated ticket generation for event registrations with unique IDs, verification system, and ticket status tracking.",
-      link: "/docs/tickets",
+        "Reach a wider audience with our powerful promotion tools. Share events on social media, send email notifications, and track engagement metrics.",
+      link: "/docs/promotion",
     },
     {
-      title: "Event Registration",
+      title: "Smart Registration",
       description:
-        "Users can register for events, receive unique tickets, and download them for event entry. Event organizers can verify tickets on event day.",
+        "Streamlined registration process with instant ticket generation. QR code-based check-in system for quick and secure event entry.",
       link: "/docs/registration",
     },
     {
-      title: "Image Upload with Cloudinary",
+      title: "Event Categories",
       description:
-        "Upload event images efficiently to Cloudinary for optimized storage and fast delivery.",
-      link: "/docs/image-upload",
-    },
-    {
-      title: "Category-based Event Organization",
-      description:
-        "Events are organized by categories, making it easy for users to find events of their interest.",
+        "Browse events by categories like Academic, Cultural, Sports, Workshops, and more. Find events that match your interests and schedule.",
       link: "/docs/categories",
     },
     {
-      title: "Responsive Dashboard",
+      title: "Interactive Dashboard",
       description:
-        "User-friendly dashboard for managing created events, viewing participated events, and handling ticket verifications.",
+        "Personalized dashboard for both organizers and participants. Track event statistics, manage registrations, and view upcoming events.",
       link: "/docs/dashboard",
     },
     {
-      title: "MongoDB Backend",
+      title: "Real-time Updates",
       description:
-        "Robust backend powered by MongoDB for storing user data, events, tickets, and media references securely.",
-      link: "/docs/backend",
+        "Stay informed with real-time notifications about event changes, registration confirmations, and important announcements.",
+      link: "/docs/updates",
+    },
+    {
+      title: "Community Building",
+      description:
+        "Connect with like-minded individuals, share experiences, and build a network of event enthusiasts and organizers.",
+      link: "/docs/community",
     },
   ];

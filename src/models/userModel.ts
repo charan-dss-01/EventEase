@@ -17,6 +17,16 @@ const userSchema = new Schema({
         type:String,
         required:[true,"email is required"],
     },
+    role: {
+    type: String,
+    enum: ['user', 'collegeLead', 'admin'],
+    default: 'user'
+    },
+    collegeLeadRequest: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected', null],
+    default: null
+    },
     eventsParticipated:{
         type:Array,
         ref:"Event",
@@ -27,7 +37,43 @@ const userSchema = new Schema({
         ref:"Event",
         default:[],
     },
-})
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isCollegeLead: {
+        type: Boolean,
+        default: false
+    },
+
+    collegeInfo:
+        {
+            collegeName:{
+                type:String,
+                default: ''
+            },
+            degree:{
+                type:String,
+                default: ''
+            },
+            yearOfPassing:{
+                type:Number,
+                default: null
+            },
+            agenda:{
+                type:String,
+                default: ''
+            }
+        },
+        requestedId:[
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+                default: null
+            }
+        ]
+
+},{timestamps:true})
 
 
 export default mongoose.models.User || mongoose.model("User",userSchema);

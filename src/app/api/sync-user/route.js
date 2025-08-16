@@ -17,6 +17,14 @@ export async function POST(req) {
       clerkId,
       email,
       events: [],
+      isAdmin: false,
+      isCollegeLead: false,
+      collegeInfo: {
+        collegeName: '',
+        degree: '',
+        yearOfPassing: null,
+        agenda: ''
+      }
     });
   }
   await user.save();
