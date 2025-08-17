@@ -12,6 +12,8 @@ export default function CreateEvent() {
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  console.log(user);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',

@@ -71,7 +71,11 @@ const userSchema = new Schema({
                 ref: "User",
                 default: null
             }
-        ]
+        ],
+        profilePicture: {
+            type: String,
+            default: ''
+        }
 
 },{timestamps:true})
 

@@ -10,7 +10,8 @@ import {
   ClipboardCheck,
   Menu, 
   X,
-  LogOut
+  LogOut,
+  UserCheck
 } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 
@@ -44,6 +45,11 @@ const menuItems = [
     title: 'Approve Requests',
     icon: ClipboardCheck,
     path: '/dashboard/ApprovePanel'
+  },
+  {
+    title: 'User Management',
+    icon: UserCheck,
+    path: '/dashboard/userManagment'
   }
 ]
 
@@ -139,8 +145,23 @@ export default function DashboardLayout({
               // 🔹 Show Approve Requests only for Admins
               // if (item.title === "Approve Requests" && !isAdmin) return null;
 
-              if (isCollegeLead || isAdmin) {
-                // Leads & Admins → hide Send Request
+              if (isCollegeLead ) {
+                // Leads → hide Send Request
+                if (item.title === "Send Request For College Lead" || item.title === "User Management" || item.title === "Approve Requests") return null;
+
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => router.push(item.path)}
+                    className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-zinc-800 rounded-lg transition-colors duration-200"
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.title}</span>
+                  </button>
+                );
+              }
+              if(isAdmin){
+                // Admins → hide Send Request
                 if (item.title === "Send Request For College Lead") return null;
                 return (
                   <button
@@ -152,9 +173,10 @@ export default function DashboardLayout({
                     <span>{item.title}</span>
                   </button>
                 );
-              } else {
+              }
+              else {
                 // Normal users → hide Create Event & My Events
-                if (item.title === "Create Event" || item.title === "My Events" || item.title === "Approve Requests") return null;
+                if (item.title === "Create Event" || item.title === "My Events" || item.title === "Approve Requests" || item.title === "User Management") return null;
                 return (
                   <button
                     key={item.path}

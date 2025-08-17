@@ -24,7 +24,8 @@ export async function POST(req) {
         degree: '',
         yearOfPassing: null,
         agenda: ''
-      }
+      },
+      profilePicture: ''
     });
   }
   await user.save();

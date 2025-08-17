@@ -17,9 +17,8 @@ export default function PendingRequests() {
     if (result.success && result.data.length > 0) {
       setData(result.data);
       toast.success("There are some pending requests");
-    } 
-    if (result.success && result.data.length === 0) {
-        toast.success("No pending requests found");
+    } else if (result.success && result.data.length === 0) {
+      toast.success("No pending requests found");
     } else {
       toast.error("Failed to fetch data");
     }
@@ -36,6 +35,7 @@ export default function PendingRequests() {
       body: JSON.stringify({ clerkUserId, targetUserId, action }),
     });
     const result = await response.json();
+
     if (result.success && action === "approve") {
       toast.success("Request approved successfully");
       fetchData();
@@ -50,8 +50,8 @@ export default function PendingRequests() {
 
   return (
    <div className="min-h-screen px-6 py-12 bg-black/90">
-  {/* Page Heading */}
-  <div className="mt-20 mb-8 text-center"> {/* Added mt-20 to push content below navbar */}
+
+  <div className="mt-20 mb-8 text-center"> 
     <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
       Pending College Lead Requests
     </h1>
@@ -98,13 +98,31 @@ export default function PendingRequests() {
 
           {/* Card Footer */}
           <div className="mt-4 flex space-x-2">
-            <button className="flex-1 px-3 py-2 rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-medium hover:opacity-90 transition" onClick={() => handleApprove(user.clerkId, "approve")}>
+            {/* Approve Button */}
+            <button 
+              className="flex-1 px-3 py-2 rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-medium hover:opacity-90 transition"
+              onClick={() => handleApprove(user.clerkId, "approve")}
+            >
               Approve
             </button>
-            <button className="flex-1 px-3 py-2 rounded-md bg-red-600/80 text-white text-sm font-medium hover:bg-red-600 transition" onClick={() => handleApprove(user.clerkId, "reject")}>
+
+            {/* Reject Button */}
+            <button 
+              className="flex-1 px-3 py-2 rounded-md bg-red-600/80 text-white text-sm font-medium hover:bg-red-600 transition"
+              onClick={() => handleApprove(user.clerkId, "reject")}
+            >
               Reject
             </button>
+
+            {/* Eye Button (View Profile) */}
+            <button 
+              className="px-3 py-2 rounded-md bg-gray-600 text-white text-sm hover:bg-gray-700 transition flex items-center justify-center"
+              
+            >
+              👁️
+            </button>
           </div>
+
         </div>
       ))}
     </div>
